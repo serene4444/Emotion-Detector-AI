@@ -19,10 +19,10 @@ def emotion_detector(text_to_analyze):
     
     try:
         response = requests.post(URL, json = input_json, headers=header, timeout=10)
-        formated_response = json.loads(response.text)
+        formatted_response = json.loads(response.text)
 
         if response.status_code == 200:
-            return formated_response
+            return formatted_response
         elif response.status_code == 400:
             return _empty_emotion_result()
     except requests.exceptions.RequestException:
@@ -31,7 +31,7 @@ def emotion_detector(text_to_analyze):
 def emotion_predictor(detected_text):
     if all(value is None for value in detected_text.values()):
         return detected_text
-    if detected_text['emotionPredictions'] is not None:
+    if detected_text.get('emotionPredictions') is not None:
         emotions = detected_text['emotionPredictions'][0]['emotion']
         anger = emotions['anger']
         disgust = emotions['disgust']
@@ -40,7 +40,7 @@ def emotion_predictor(detected_text):
         sadness = emotions['sadness']
         max_emotion = max(emotions, key=emotions.get)
         #max_emotion_score = emotions[max_emotion]
-        formated_dict_emotions = {
+        formatted_dict_emotions = {
                                 'anger': anger,
                                 'disgust': disgust,
                                 'fear': fear,
@@ -48,7 +48,7 @@ def emotion_predictor(detected_text):
                                 'sadness': sadness,
                                 'dominant_emotion': max_emotion
                                 }
-        return formated_dict_emotions
+        return formatted_dict_emotions
 
 
 def format_emotion_report(result, analyzed_text=None):
