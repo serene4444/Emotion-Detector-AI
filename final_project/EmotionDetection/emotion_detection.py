@@ -18,14 +18,14 @@ def emotion_detector(text_to_analyze):
     input_json = { "raw_document": { "text": text_to_analyze } }
     
     try:
-        response = requests.post(URL, json = input_json, headers=header, timeout=10)
+        response = requests.post(URL, json = input_json, headers=header, timeout=30)
         formatted_response = json.loads(response.text)
 
         if response.status_code == 200:
-            return formatted_response
+            return emotion_predictor(formatted_response)
         elif response.status_code == 400:
             return _empty_emotion_result()
-    except requests.exceptions.RequestException:
+    except (requests.exceptions.RequestException, json.JSONDecodeError, Exception):
         return _empty_emotion_result()
 
 def emotion_predictor(detected_text):
@@ -49,6 +49,7 @@ def emotion_predictor(detected_text):
                                 'dominant_emotion': max_emotion
                                 }
         return formatted_dict_emotions
+    return _empty_emotion_result()
 
 
 def format_emotion_report(result, analyzed_text=None):

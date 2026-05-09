@@ -30,7 +30,7 @@ def sent_analyzer():
         f"The dominant emotion is {dominant_emotion}."
     )
     
-app.route("/")
+@app.route("/")
 def render_index_page():
     return render_template("index.html")
 
