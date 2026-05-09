@@ -23,14 +23,17 @@ def emotion_detector(text_to_analyze):
 
         if response.status_code == 200:
             return emotion_predictor(formatted_response)
+
         elif response.status_code == 400:
             return _empty_emotion_result()
+
     except (requests.exceptions.RequestException, json.JSONDecodeError, Exception):
         return _empty_emotion_result()
 
 def emotion_predictor(detected_text):
     if all(value is None for value in detected_text.values()):
         return detected_text
+
     if detected_text.get('emotionPredictions') is not None:
         emotions = detected_text['emotionPredictions'][0]['emotion']
         anger = emotions['anger']
@@ -38,8 +41,11 @@ def emotion_predictor(detected_text):
         fear = emotions['fear']
         joy = emotions['joy']
         sadness = emotions['sadness']
+
+
         max_emotion = max(emotions, key=emotions.get)
-        #max_emotion_score = emotions[max_emotion]
+
+    
         formatted_dict_emotions = {
                                 'anger': anger,
                                 'disgust': disgust,
