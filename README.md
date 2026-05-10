@@ -15,7 +15,6 @@ Output screenshots
 ![You shouldn't chew with your mouth open when you eat..png](output/You%20shouldn't%20chew%20with%20your%20mouth%20open%20when%20you%20eat..png)
 ![I think I'm having fun.png](output/I%20think%20I'm%20having%20fun.png)
 ![Artemis II's takeoff was so cool, I loved the pictures!.png](output/Artemis%20II's%20takeoff%20was%20so%20cool%2C%20I%20loved%20the%20pictures!.png)
-![Empty input error screenshot](empty_input_error.png)
 
 What I made
 - A small Flask-based web UI (`/`) and an API endpoint (`/emotionDetector`) that accepts text and returns an emotion report.
