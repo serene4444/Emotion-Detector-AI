@@ -24,7 +24,7 @@ The repository includes application code and output samples:
 ## 🧰 Tools & Technologies
 
 **Languages:** Python  
-**Development Environment:** Jupyter Notebook, Git & GitHub  
+**Development Environment:** Git & GitHub  
 **Framework & Libraries:**
 - Flask — lightweight web framework
 - requests — HTTP client for remote API calls
