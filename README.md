@@ -1,61 +1,90 @@
-**Serene Plummer**
+NLP - Emotion Detection 🎯
 
-Project: NLP - Emotion Detection
+**Course:** Developing AI Applications with Python and Flask
 
-AI / Machine Learning concepts used
-- Natural language processing to analyze text for emotion cues.
-- Emotion classification into `joy`, `anger`, `disgust`, `sadness`, and `fear`.
-- A dominant-emotion decision step that selects the strongest predicted label.
-- A fallback scoring approach so the app still responds when the remote model is unavailable.
-- Basic API-driven inference, where text is sent to a model endpoint and the response is converted into a user-friendly report.
+**Created by:** Serene Plummer
 
-This repository contains a small Flask app and emotion detection utilities.
+---
 
-Output screenshots
-![You shouldn't chew with your mouth open when you eat..png](output/You%20shouldn't%20chew%20with%20your%20mouth%20open%20when%20you%20eat..png)
-![I think I'm having fun.png](output/I%20think%20I'm%20having%20fun.png)
-![Artemis II's takeoff was so cool, I loved the pictures!.png](output/Artemis%20II's%20takeoff%20was%20so%20cool%2C%20I%20loved%20the%20pictures!.png)
+## 🎯 Project Overview
 
-What I made
-- A small Flask-based web UI (`/`) and an API endpoint (`/emotionDetector`) that accepts text and returns an emotion report.
-- An `emotion_detection` module that uses a remote API when enabled and a local fallback when the service is unavailable.
-- Simple UI script (`static/mywebscript.js`) that calls the endpoint and displays the formatted result.
-- Screenshots of runs are included in the workspace.
+This project builds a real-time emotion detection web application that analyzes user-provided text and classifies it into one of five emotional categories: **joy**, **anger**, **disgust**, **sadness**, and **fear**. The system uses natural language processing (NLP) to extract emotion cues and a dominant-emotion decision step to select the strongest predicted label. A local fallback scorer ensures the application remains responsive even when the remote AI service is unavailable.
 
-Process (how I built it)
-- Created the Flask app and basic HTML/JS UI to send text to the backend.
-- Implemented the core emotion detection function that originally called the external Watson-like API.
-- Made the system reliable by adding a local fallback so the app remains responsive when the remote API times out or is disabled.
-- Iteratively ran the Flask server locally, captured screenshots of the UI and error states, and fixed issues exposed by testing.
-- Added environment variables for configuration: `EMOTION_ENABLE_REMOTE_API`, `EMOTION_API_URL`, `EMOTION_API_TIMEOUT_SECONDS`, `EMOTION_CACHE_TTL_SECONDS`.
+## 📁 Data & Project Assets
 
-How to run
-1. Create and activate a virtual environment (Windows PowerShell example):
+The repository includes application code and output samples:
 
-```
+- **`final_project/EmotionDetection/emotion_detection.py`** — Core NLP module with local fallback scorer and remote API integration.
+- **`final_project/EmotionDetection/server.py`** — Flask application with web UI route and API endpoint (`/emotionDetector`).
+- **`final_project/templates/index.html`** — HTML interface for user text input.
+- **`final_project/static/mywebscript.js`** — Client-side JavaScript for API calls and result rendering.
+- **`output/`** — Sample emotion detection results with annotated screenshots.
+- **`empty_input_error.png`** — Error handling demonstration (invalid/empty input).
+
+## 🧰 Tools & Technologies
+
+**Languages:** Python  
+**Development Environment:** Jupyter Notebook, Git & GitHub  
+**Framework & Libraries:**
+- Flask — lightweight web framework
+- requests — HTTP client for remote API calls
+- threading, time — for concurrent caching and TTL management
+- Custom keyword-based NLP scorer — local fallback when remote unavailable
+
+**APIs:** Watson-like emotion detection endpoint (optional remote mode)  
+**UI:** HTML5, vanilla JavaScript, CSS
+
+## 🔍 Project Workflow & Learnings
+
+1. **API Integration** — Connected to the external Watson emotion detection service; implemented timeout and error handling.
+2. **Local Fallback Scorer** — Built a keyword-based heuristic scorer so the app works offline or when the remote service is down.
+3. **Caching & Performance** — Added a thread-safe TTL cache to avoid repeated identical API calls.
+4. **Error Handling** — Implemented graceful fallbacks for empty input, network failures, and invalid responses.
+5. **Web UI Development** — Created a simple, responsive HTML interface with real-time feedback.
+6. **Testing & Validation** — Ran unit tests to confirm emotion classification accuracy; captured screenshots of happy path and error states.
+
+## 🎨 Output Samples
+
+![You shouldn't chew with your mouth open when you eat..png](output/You%20shouldn't%20chew%20with%20your%20mouth%20open%20when%20you%20eat..png)  
+![I think I'm having fun.png](output/I%20think%20I'm%20having%20fun.png)  
+![Artemis II's takeoff was so cool, I loved the pictures!.png](output/Artemis%20II's%20takeoff%20was%20so%20cool%2C%20I%20loved%20the%20pictures!.png)  
+![Empty input error screenshot](empty_input_error.png)
+
+## 🚀 Quick Start
+
+**1. Set up the virtual environment:**
+
+```bash
 python -m venv .venv
-& ".venv\Scripts\Activate.ps1"
+& ".venv\Scripts\Activate.ps1"  # Windows PowerShell
+# or: source .venv/bin/activate  # Linux/macOS
 ```
 
-2. Install dependencies:
+**2. Install dependencies:**
 
-```
+```bash
 pip install -r final_project/requirements.txt
 ```
 
-3. Run the Flask app from `final_project`:
+**3. Run the Flask app:**
 
-```
+```bash
 cd final_project
 python -m flask --app EmotionDetection.server run --host localhost --port 5000
 ```
 
-Configuration
-- `EMOTION_ENABLE_REMOTE_API`: set to `1` or `true` to enable remote API calls (default off).
-- `EMOTION_API_URL`: override remote API URL.
-- `EMOTION_API_TIMEOUT_SECONDS`: per-request timeout when calling remote API.
-- `EMOTION_CACHE_TTL_SECONDS`: TTL for in-memory cache (seconds).
+Open your browser to `http://localhost:5000` and enter text to analyze.
 
-Notes
-- Local fallback scorer is used when remote API is disabled or unreachable.
+## ⚙️ Configuration
+
+- **`EMOTION_ENABLE_REMOTE_API`**: Set to `1` or `true` to enable remote Watson API calls (default: `0` — uses local scorer).
+- **`EMOTION_API_URL`**: Override the remote API endpoint URL.
+- **`EMOTION_API_TIMEOUT_SECONDS`**: Per-request timeout for remote calls (default: `1.0` seconds).
+- **`EMOTION_CACHE_TTL_SECONDS`**: Time-to-live for cached results (default: `300` seconds).
+
+## 📝 Notes
+
+- The local fallback scorer uses keyword matching for rapid responses when the remote service is unavailable.
+- All emotion scores are normalized to a 0–1 range; the dominant emotion is selected as the highest-scoring category.
+- Unit tests validate accuracy on sample test cases (see `final_project/EmotionDetection/test_emotion_detection.py`).
 
